@@ -3,6 +3,7 @@ namespace DB;
 final class PgSQL {
 	private $connection;
 
+	/*
 	public function __construct($hostname, $username, $password, $database, $port = '5432') {
 		$this->connection = @pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database);
 
@@ -11,6 +12,16 @@ final class PgSQL {
 		}
 
 		pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
+	}
+	
+	*/
+	
+	public function __construct($hostname, $username, $password, $database, $port = '5432') {
+		if (!$this->link = pg_connect('host=' . $hostname . ' port=' . $port .  ' user=' . $username . ' password='	. $password . ' dbname=' . $database)) {
+			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
+		}
+  
+		pg_query($this->link, "SET CLIENT_ENCODING TO 'UTF8'");
 	}
 
 	public function query($sql) {
